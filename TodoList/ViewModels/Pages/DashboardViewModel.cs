@@ -3,17 +3,36 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using System.Collections.ObjectModel;
+
+using TodoList.Helpers;
+using TodoList.Models;
+
 namespace TodoList.ViewModels.Pages
 {
     public partial class DashboardViewModel : ObservableObject
     {
         [ObservableProperty]
-        private int _counter = 0;
+        string todayString = string.Empty;
 
-        [RelayCommand]
-        private void OnCounterIncrement()
+        [ObservableProperty]
+        string todoString = string.Empty;
+
+        [ObservableProperty]
+        ObservableCollection<TodoTask> todoTasks = new ObservableCollection<TodoTask>()
         {
-            Counter++;
+            new TodoTask()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = "XXXXX"
+            }
+        };
+
+        public DashboardViewModel()
+        {
+            DateTime currentDate = DateTime.Now;
+            string formattedDate = $"{currentDate.Month}月{currentDate.Day}日，{currentDate.GetChineseDayOfWeek()}";
+            todayString = formattedDate;
         }
     }
 }

@@ -5,7 +5,6 @@
 
 using System.Collections.ObjectModel;
 
-using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 
 namespace TodoList.ViewModels.Windows
@@ -20,15 +19,9 @@ namespace TodoList.ViewModels.Windows
         {
             new NavigationViewItem()
             {
-                Content = "Home",
+                Content = "主页",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
                 TargetPageType = typeof(Views.Pages.DashboardPage)
-            },
-            new NavigationViewItem()
-            {
-                Content = "Data",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
-                TargetPageType = typeof(Views.Pages.DataPage)
             }
         };
 
@@ -37,7 +30,7 @@ namespace TodoList.ViewModels.Windows
         {
             new NavigationViewItem()
             {
-                Content = "Settings",
+                Content = "设置",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
                 TargetPageType = typeof(Views.Pages.SettingsPage)
             }

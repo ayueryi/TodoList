@@ -14,23 +14,98 @@
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    SizeChanged="Size_Changed"
     mc:Ignorable="d">
 
-    <Grid VerticalAlignment="Top">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <Grid x:Name="DashboardPageGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="7.5*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            Height="50"
+            Margin="10"
+            HorizontalAlignment="Stretch">
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                <TextBlock FontSize="22">我的一天</TextBlock>
+                <TextBlock Text="{Binding ViewModel.TodayString}" />
+            </StackPanel>
 
-        <ui:Button
-            Grid.Column="0"
-            Command="{Binding ViewModel.CounterIncrementCommand, Mode=OneWay}"
-            Content="Click me!"
-            Icon="Fluent24" />
-        <TextBlock
-            Grid.Column="1"
-            Margin="12,0,0,0"
-            VerticalAlignment="Center"
-            Text="{Binding ViewModel.Counter, Mode=OneWay}" />
+            <Button Height="20" HorizontalAlignment="Right">```</Button>
+        </Grid>
+
+        <ScrollViewer
+            x:Name="ScrollViewer_Tasks"
+            Grid.Row="1"
+            Margin="5">
+            <ItemsControl ItemsSource="{Binding ViewModel.TodoTasks}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Name="border"
+                            Height="70"
+                            VerticalAlignment="Center"
+                            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            CornerRadius="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="40"
+                                    Text="○" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Title}" />
+                                    <TextBlock Text="任务" />
+                                </StackPanel>
+                                <TextBlock
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Text="☆" />
+                            </Grid>
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightCyan" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2" Margin="5">
+
+            <TextBlock
+                Width="60"
+                Margin="0,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                新增任务
+            </TextBlock>
+            <TextBox
+                Margin="80,10,10,10"
+                VerticalAlignment="Center"
+                KeyDown="Add_Task"
+                Text="{Binding ViewModel.TodoString, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
     </Grid>
 </Page>

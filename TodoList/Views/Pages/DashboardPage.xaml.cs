@@ -20,5 +20,26 @@ namespace TodoList.Views.Pages
 
             InitializeComponent();
         }
+
+        private void Add_Task(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                if (!string.IsNullOrWhiteSpace(ViewModel.TodoString))
+                {
+                    ViewModel.TodoTasks.Add(new Models.TodoTask()
+                    {
+                        Title = ViewModel.TodoString
+                    });
+                    ViewModel.TodoString = string.Empty;
+                }
+            }
+        }
+
+        private void Size_Changed(object sender, SizeChangedEventArgs e)
+        {
+            ScrollViewer_Tasks.Height = DashboardPageGrid.RowDefinitions[1].ActualHeight;
+            e.Handled = true;
+        }
     }
 }
